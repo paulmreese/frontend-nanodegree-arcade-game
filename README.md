@@ -13,7 +13,7 @@
 
 ### Running Turtlr
 
-To Run Turtlr, down a copy of this repository, and open the included index.html file in your preferred desktop browser. This game requires use of the keyboard.
+To Run Turtlr, download a copy of this repository, and then open the included index.html file in your preferred desktop browser. This game requires use of the keyboard.
 
 ### Playing Turtlr
 
