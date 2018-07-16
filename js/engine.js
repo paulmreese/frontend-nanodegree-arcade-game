@@ -1,3 +1,35 @@
+/*
+  TODO: Add "isGameOver" boolean, and check it when spawning Enemies
+  TODO: Add button functionality to modal. If the user starts a new game,
+  remove the markers and start over
+ *Turtler image credit:
+ <a href="https://www.kisspng.com/png-loggerhead-sea-turtle-icon-sea-turtle-153545/"
+  target="_blank">Loggerhead sea turtle Icon - Sea turtle @kisspng</a>
+
+  Gull Image credit:
+  http://pngimg.com/download/28566
+
+  litter credit:
+  http://www.wcnorthwest.com/services.aspx#!rc-cpage=197283
+
+  Turtle Clip art credit:
+  http://www.clipartpanda.com/clipart_images/little-green-turtle-clip-art-5909920
+
+  Animate.css credit:
+  https://daneden.github.io/animate.css/
+
+  sweetalert2 credit:
+  https://sweetalert2.github.io/
+
+  css flip credit:
+  https://css-tricks.com/snippets/css/flip-an-image/
+ *
+ *Implement after game is functional!
+ *Add victory dance(look left, look right(swell during, then lean doing both))
+ *Add sounds
+ *Have a discarded eggshell for each new life!
+ */
+
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
@@ -9,7 +41,7 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
+ * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
 
@@ -79,7 +111,8 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions(player, allEnemies);
+        checkForWater(player.col);
     }
 
     /* This is called by the update function and loops through all of the
@@ -108,16 +141,16 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/beach-block.png',   // Row 1 of 4 of beach
+                'images/beach-block.png',   // Row 2 of 4 of beach
+                'images/beach-block.png',   // Row 3 of 4 of beach
+                'images/beach-block.png',   // Row 4 of 4 of beach
+                'images/grassy-beach-block.png'    // Bottom row of grassy beach
             ],
             numRows = 6,
             numCols = 5,
             row, col;
-        
+
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
@@ -149,11 +182,15 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        player.render();
+        allMarkers.forEach(function(marker) {
+            marker.render();
+        });
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
-        player.render();
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -169,11 +206,13 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-block.png',
         'images/water-block.png',
-        'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/beach-block.png',
+        'images/grassy-beach-block.png',
+        'images/enemy-gull.png',
+        'images/enemy-litter.png',
+        'images/char-turtler.png',
+        'images/smol-v-turt.png'
     ]);
     Resources.onReady(init);
 

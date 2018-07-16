@@ -1,3 +1,78 @@
+@font-face {
+  font-family: KeeponTruckin;
+  src: url(fonts/KeeponTruckin.ttf);
+}
+
+@font-face {
+    font-family: 'VI-Thuy-Tien-Hoa';
+    src:url('fonts/VI-Thuy-Tien-Hoa.ttf.woff') format('woff'),
+        url('fonts/VI-Thuy-Tien-Hoa.ttf.svg#VI-Thuy-Tien-Hoa') format('svg'),
+        url('fonts/VI-Thuy-Tien-Hoa.ttf.eot'),
+        url('fonts/VI-Thuy-Tien-Hoa.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     text-align: center;
+    font-family: sans-serif;
+    color: rgba(0, 0, 0, 1);
+}
+
+h1{
+  font: 5em KeeponTruckin;
+  text-shadow: -3px 3px orange,
+               3px 3px orange,
+               -6px 6px yellow,
+               6px 6px yellow,
+               -10px 10px red,
+               0 10px red,
+               10px 10px red,
+               -14px 14px blue,
+               0 14px blue,
+               14px 14px blue;;
+  color: green;
+  margin: 0.2em 0 0 0;
+  cursor: default;
+}
+
+canvas{
+  margin: -35px 0 0 0;
+}
+
+h2 {
+  font-family: KeeponTruckin;
+  text-shadow: 1px -1px white,
+               -2px 2px black;
+}
+
+h3 {
+  font-family: 'VI-Thuy-Tien-Hoa';
+  font-weight: 200;
+  font-size: 1.3em;
+}
+
+.swal2-modal {
+    border: 2px #3085d6 solid;
+}
+
+/*Code to flip an images direction, used to make Turtlr's dancing that much
+ *More endearing
+ */
+.flipped {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+ }
+
+/*The dance routine*/
+
+#dance {
+  -moz-animation-iteration-count: 3;
+  -o-animation-iteration-count: 3;
+  -webkit-animation-iteration-count: 3;
+  animation-iteration-count: 3;
 }
