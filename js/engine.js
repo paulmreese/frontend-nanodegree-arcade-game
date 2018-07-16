@@ -1,34 +1,10 @@
 /*
-  TODO: Add "isGameOver" boolean, and check it when spawning Enemies
-  TODO: Add button functionality to modal. If the user starts a new game,
-  remove the markers and start over
- *Turtler image credit:
- <a href="https://www.kisspng.com/png-loggerhead-sea-turtle-icon-sea-turtle-153545/"
-  target="_blank">Loggerhead sea turtle Icon - Sea turtle @kisspng</a>
-
-  Gull Image credit:
-  http://pngimg.com/download/28566
-
-  litter credit:
-  http://www.wcnorthwest.com/services.aspx#!rc-cpage=197283
-
-  Turtle Clip art credit:
-  http://www.clipartpanda.com/clipart_images/little-green-turtle-clip-art-5909920
-
-  Animate.css credit:
-  https://daneden.github.io/animate.css/
-
-  sweetalert2 credit:
-  https://sweetalert2.github.io/
-
-  css flip credit:
-  https://css-tricks.com/snippets/css/flip-an-image/
- *
- *Implement after game is functional!
- *Add victory dance(look left, look right(swell during, then lean doing both))
+ *TODO:
+ *Add pixelated stone background
  *Add sounds
  *Have a discarded eggshell for each new life!
  */
+
 
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
@@ -211,8 +187,8 @@ var Engine = (function(global) {
         'images/grassy-beach-block.png',
         'images/enemy-gull.png',
         'images/enemy-litter.png',
-        'images/char-turtler.png',
-        'images/smol-v-turt.png'
+        'images/char-turtlr.png',
+        'images/marker-turtle.png'
     ]);
     Resources.onReady(init);
 

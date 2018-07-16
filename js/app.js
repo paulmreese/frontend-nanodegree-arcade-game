@@ -1,4 +1,4 @@
-// List of water spaces
+// List of water spaces, pre-populate list as unoccupied spaces
 let isOccupied =[];
 for (let i = 1; i < 6; i++) {
   isOccupied[i] = false;
@@ -11,7 +11,7 @@ let isGameOver = false;
 let lastRendered = '';
 
 //Detects when animations end for animate.css
-// See https://github.com/daneden/animate.css/issues/644
+//https://github.com/daneden/animate.css/issues/644
 var animationEnd = (function(el) {
   var animations = {
     animation: 'animationend',
@@ -27,13 +27,12 @@ var animationEnd = (function(el) {
   }
 })(document.createElement('div'));
 
-// Enemies our player must avoid
-var Enemy = function(name, y, row, speed, sprite, isLitter) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+/* Class Functions */
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+/*Enemy*/
+
+// Class for enemies our player must avoid
+var Enemy = function(name, y, row, speed, sprite, isLitter) {
     this.name = name;
     this.x = 505;
     this.y = y;
@@ -57,11 +56,13 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+/*Marker*/
+
 //Class for the victory markers that indicate which water has been entered
 let Marker = function(x) {
   this.x = x;
   this.y = 0;
-  this.sprite = 'images/smol-v-turt.png';
+  this.sprite = 'images/marker-turtle.png';
 
   this.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -69,32 +70,41 @@ let Marker = function(x) {
 }
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+/*Player*/
+
 let Player = function(x = 202, y = 404, row = 1, col = 3) {
 
+  //required for engine, not used. Could save memory by removing call in engine?
   this.update = function(dt) {
 
   }
+
+  //Draw the player in new frame
   this.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
+
+  //Return player to starting position
   this.restart = function() {
     this.x = 202;
     this.y = 404;
     this.row = 1;
     this.col = 3;
   }
-  this.sprite = 'images/char-turtler.png';
+
+  this.sprite = 'images/char-turtlr.png';
   this.x = x;
   this.y = y;
   this.row = row;
   this.col = col;
 }
 
+/*Actually handles the key presses a player inputs and enacts them on the char-
+ *acter. Prevents motion outside of tiles, as well as between water tiles.
+ */
+
 Player.prototype.handleInput = function(value) {
-  if (value === 'left' && this.col != 1) {
+  if (value === 'left' && this.col != 1 && this.row != 6) {
     this.x -= 101;
     this.col--;
   }
@@ -102,7 +112,7 @@ Player.prototype.handleInput = function(value) {
     this.y -= 85;
     this.row++;
   }
-  if (value === 'right' && this.col != 5) {
+  if (value === 'right' && this.col != 5 && this.row != 6) {
     this.x += 101;
     this.col++;
   }
@@ -112,21 +122,54 @@ Player.prototype.handleInput = function(value) {
   }
 }
 
+/*Functions*/
+
+//Function to bounce entire canvas
+function bounceCanvas() {
+  setTimeout(function(){
+    document.querySelector('canvas').classList.add('animated', 'bounceIn');
+    setTimeout(function(){
+      document.querySelector('canvas').classList.remove('animated',
+      'bounceIn');
+    }, 420);
+  }, 0);
+}
+
+//Function to restart the game
+function restartGame() {
+  bounceCanvas();
+  isGameOver = false;
+  allMarkers = [];
+  isOccupied = [];
+  allEnemies = [gull, fastLitter, litter, fastGull];
+  player.restart();
+}
+
+//Function to check for collisions between player and other objects
 function checkCollisions(player, allEnemies){
+
   for (let i = 0; i < allEnemies.length; i++) {
+
     //Checks if the enemy is litter, then determines where the detection
     //boundaries are.
     if ((allEnemies[i].isLitter && allEnemies[i].row == player.row &&
     allEnemies[i].x <= (player.x + 60) && allEnemies[i].x >= (player.x - 70)) ||
     (!allEnemies[i].isLitter && allEnemies[i].row == player.row &&
     allEnemies[i].x <= (player.x + 70) && allEnemies[i].x >= (player.x - 50))){
-      //TODO: create death animation, restart
-      setTimeout(function(){}, 50);
+
+      //death animation, restart
+      bounceCanvas();
       player.restart();
+
     }
+
+    //If an enemy leaves the screen, replace it with another
     if (allEnemies[i].x < -101) {
       const lastEnemy = allEnemies[i];
       lastEnemy.x = 505;
+
+      /*assign variables to file links, checks which was rendered last.
+       *Prevents one type of enemy from becoming the only enemy*/
       const gullFile = 'images/enemy-gull.png';
       const litterFile = 'images/enemy-litter.png';
       let thisSprite = '';
@@ -137,7 +180,11 @@ function checkCollisions(player, allEnemies){
         thisSprite = gullFile;
         lastRendered = gullFile;
       }
-      //console.log(lastEnemy);
+
+      /*Creates a pseudo-random pattern of enemies, varying their speed Based
+       *on their current row, as well as the last enemy to leave the screen,
+       *keeping the total number of enemies on screen under 8 at all times
+       */
       if (allEnemies.length < 7 && allEnemies[i].row > 4 && !isGameOver) {
         const extraEnemy = new Enemy(lastEnemy.name, (lastEnemy.y + 170),
           (lastEnemy.row - 2), (lastEnemy.speed * 1.15), thisSprite,
@@ -161,18 +208,25 @@ function checkCollisions(player, allEnemies){
   }
 }
 
+//Function to check if the player has reached water
+
 function checkForWater(col) {
   if (player.row == 6 && !isOccupied[col]) {
+
+    //adds a new marker when water is reached, and notes it in isOccupied array
     allMarkers[col] = new Marker(player.x);
     isOccupied[col] = true;
+
+    //checks if all five water tiles have been reached
     if (isOccupied.filter(x => x).length === 5) {
+
       //Winning Conditions Met, now let 'em know!
       isGameOver = true;
+
+      //hide player character
       player.x = 1000;
-      //setTimeout(function(){alert('Con-garts.')}, 50);
-      /*setTimeout(function(){
-        ctx.rotate(-20*Math.PI/180)
-      }, 200);*/
+
+      //Sweet alert 2 victory notification
       swal({
         title: '<style>.swal2-popup .swal2-title{color: #3085d6; font-size: ' +
         '3em}</style>Congratulations!',
@@ -182,18 +236,18 @@ function checkForWater(col) {
         `<h3>You saved Turtlr's family!</h3>`,
         background: 'rgba(225, 225, 225, 0.85)',
         showCancelButton: true,
-        confirmButtonText: 'Play Again?',
-        cancelButtonText: 'Awesome!',
+        confirmButtonColor: '#208520',
+        cancelButtonColor: '#8e2727',
+        confirmButtonText: 'Play Again!',
+        cancelButtonText: "I'm Done.",
         reverseButtons: true
       }).then((result) => {
         if (result.value) {
-          isGameOver = false;
-          allMarkers = [];
-          isOccupied = [];
-          allEnemies = [gull, fastLitter, litter, fastGull];
-          player.restart();
+          restartGame();
         }
       });
+
+      //Makes Turtlr Dance
       document.getElementById('dance').addEventListener(animationEnd, function(e) {
         e.target.removeEventListener(e.type, arguments.callee);
         e.target.classList.remove('flipped', 'animated', 'bounce', 'pulse', 'flip', 'tada');
@@ -206,9 +260,9 @@ function checkForWater(col) {
   }
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+/*Instantiate Objects*/
+
+//Enemy Objects
 let gull = new Enemy('gull', 323, 2, 125, 'images/enemy-gull.png', false);
 
 let fastLitter = new Enemy('fastLitter', 237, 3, 225, 'images/enemy-litter.png',
@@ -218,16 +272,18 @@ let litter = new Enemy('litter', 152, 4, 105, 'images/enemy-litter.png', true);
 
 let fastGull = new Enemy('fastGull', 73, 5, 175, 'images/enemy-gull.png', false);
 
+// All enemy objects in an array called allEnemies
 let allEnemies = [gull, fastLitter, litter, fastGull];
 
+//Array to hold all markers for water tiles reached
 let allMarkers = []
 
+// Place the player object in a variable called player
 let player = new Player();
 
+/*Event Listeners*/
 
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to Player.handleInput()
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -239,9 +295,24 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+//This listens for clicks on the Turtlr title
 document.querySelector('#title').addEventListener('click', function() {
   this.classList.remove('rubberBand');
   setTimeout(function() {
     document.querySelector('#title').classList.add('rubberBand');
   }, 100);
+});
+
+//This listens for clicks on dancing Turtlr
+document.addEventListener('click', function(e) {
+  if (e.target === document.getElementById('dance')) {
+    e.target.classList.remove('tada', 'animated');
+    e.target.classList.add('flipped', 'animated', 'bounce', 'pulse', 'flip', 'tada');
+    document.getElementById('dance').addEventListener(animationEnd, function(e) {
+      e.target.removeEventListener(e.type, arguments.callee);
+      e.target.classList.remove('flipped', 'animated', 'bounce', 'pulse', 'flip', 'tada');
+      e.target.classList.add('tada', 'animated');
+    });
+  }
+
 });

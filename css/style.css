@@ -50,6 +50,80 @@ h3 {
   font-family: 'VI-Thuy-Tien-Hoa';
   font-weight: 200;
   font-size: 1.3em;
+  text-shadow: -2px 2px white;
+}
+
+#restart-link {
+  text-decoration: none;
+  width: 101px;
+  height: 95px;
+
+  font-size: 4em;
+  position: absolute;
+  display: inline-block;
+  top: 15px;
+  padding: 0 20px 0 0;
+}
+
+#restart-link::after {
+  content: '\267B';
+}
+
+#restart-link:visited {
+  color: blue;
+}
+
+#restart-link:focus,
+#restart-link:hover {
+  color: green;
+}
+
+#restart-link:active {
+  color: red;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /*Reset the Line height*/
+    font-size: 14px;
+    line-height: 14px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 75%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+ Tooltip arrow
+#restart-link .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+#restart-link:hover .tooltiptext,
+#restart-link:focus .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
 
 .swal2-modal {
