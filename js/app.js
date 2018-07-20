@@ -145,6 +145,30 @@ function restartGame() {
   player.restart();
 }
 
+//Function to launch info popup
+function moreInfo() {
+  swal({
+    title: '<style>.swal2-popup .swal2-title{color: #3085d6; font-size: ' +
+    '3em}</style>Turtlr is an Endangered Species!',
+    html: '<img src="images/sea-turtle-plush-transparent.png" alt="Sea Turtle' +
+    `plush offered for adoption by the World Wildlife Fund." class="plush">` +
+    '<h3>...but you can help by symbolically adopting a loggerhead sea turtle' +
+    ' <em>today!</em></h3>',
+    background: 'rgba(225, 225, 225, 0.85)',
+    showCancelButton: true,
+    confirmButtonColor: '#208520',
+    cancelButtonColor: '#8e2727',
+    confirmButtonText: 'Adopt Now!',
+    cancelButtonText: "Keep Playing",
+    reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+      window.open('https://gifts.worldwildlife.org/gift-center/' +
+      'gifts/Species-Adoptions/Sea-Turtle.aspx');
+    }
+  });
+}
+
 //Function to check for collisions between player and other objects
 function checkCollisions(player, allEnemies){
 

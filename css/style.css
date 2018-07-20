@@ -53,7 +53,8 @@ h3 {
   text-shadow: -2px 2px white;
 }
 
-#restart-link {
+#restart-link,
+#info-link {
   text-decoration: none;
   width: 101px;
   height: 95px;
@@ -65,20 +66,33 @@ h3 {
   padding: 0 20px 0 0;
 }
 
+#info-link {
+  text-align: right;
+  margin: 0 0 0 386px;
+}
+
 #restart-link::after {
   content: '\267B';
 }
 
-#restart-link:visited {
+#info-link::after {
+  content: '\24D8';
+}
+
+#restart-link:visited,
+#info-link:visited {
   color: blue;
 }
 
 #restart-link:focus,
-#restart-link:hover {
+#restart-link:hover,
+#info-link:focus,
+#info-link:hover {
   color: green;
 }
 
-#restart-link:active {
+#restart-link:active,
+#info-link:active {
   color: red;
 }
 
@@ -107,21 +121,11 @@ h3 {
     transition: opacity 0.3s;
 }
 
- Tooltip arrow
-#restart-link .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
 /* Show the tooltip text when you mouse over the tooltip container */
 #restart-link:hover .tooltiptext,
-#restart-link:focus .tooltiptext {
+#restart-link:focus .tooltiptext,
+#info-link:hover .tooltiptext,
+#info-link:focus .tooltiptext {
     visibility: visible;
     opacity: 1;
 }
@@ -149,4 +153,9 @@ h3 {
   -o-animation-iteration-count: 3;
   -webkit-animation-iteration-count: 3;
   animation-iteration-count: 3;
+}
+
+.plush {
+  margin: -60px auto -70px auto;
+  padding: 10px 0;
 }
