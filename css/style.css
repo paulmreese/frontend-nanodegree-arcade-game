@@ -17,6 +17,7 @@ body {
     text-align: center;
     font-family: sans-serif;
     color: rgba(0, 0, 0, 1);
+    background: #333 url('../images/seamless-tilable-bricks.jpg') repeat;
 }
 
 h1{
@@ -38,6 +39,8 @@ h1{
 
 canvas{
   margin: -35px 0 0 0;
+  -webkit-filter: drop-shadow(0 0 15px #000);
+  filter: drop-shadow(0 0 0 15px #000);
 }
 
 h2 {
@@ -51,6 +54,13 @@ h3 {
   font-weight: 200;
   font-size: 1.3em;
   text-shadow: -2px 2px white;
+}
+
+h1,
+#restart-link,
+#info-link {
+  -webkit-filter: drop-shadow(0 0 8px #fff);
+  filter: drop-shadow(0 0 8px #fff);
 }
 
 #restart-link,
