@@ -145,13 +145,30 @@ function restartGame() {
   player.restart();
 }
 
+function toggleControls() {
+  const controlsLink = document.querySelector('#controls-link');
+  const onScreenControls = document.querySelector('#arrows');
+  if (controlsLink.classList.contains('hide-controls')) {
+    controlsLink.classList.remove('hide-controls');
+    controlsLink.classList.add('show-controls');
+    controlsLink.innerText = 'Show Controls';
+    onScreenControls.style.display = 'none';
+
+  } else {
+    controlsLink.classList.add('hide-controls');
+    controlsLink.classList.remove('show-controls');
+    controlsLink.innerText = 'Hide Controls ';
+    onScreenControls.style.display = 'inline-block';
+  }
+}
+
 //Function to launch info popup
 function moreInfo() {
   swal({
     title: '<style>.swal2-popup .swal2-title{color: #3085d6; font-size: ' +
     '3em}</style>Turtlr is an Endangered Species!',
     html: '<img src="images/sea-turtle-plush-transparent.png" alt="Sea Turtle' +
-    `plush offered for adoption by the World Wildlife Fund." class="plush">` +
+    'plush offered for adoption by the World Wildlife Fund." class="plush">' +
     '<h3>...but you can help by symbolically adopting a loggerhead sea turtle' +
     ' <em>today!</em></h3>',
     background: 'rgba(225, 225, 225, 0.85)',
@@ -193,7 +210,8 @@ function checkCollisions(player, allEnemies){
       lastEnemy.x = 505;
 
       /*assign variables to file links, checks which was rendered last.
-       *Prevents one type of enemy from becoming the only enemy*/
+       *Prevents one type of enemy from becoming the only enemy
+       */
       const gullFile = 'images/enemy-gull.png';
       const litterFile = 'images/enemy-litter.png';
       let thisSprite = '';
@@ -338,5 +356,4 @@ document.addEventListener('click', function(e) {
       e.target.classList.add('tada', 'animated');
     });
   }
-
 });
