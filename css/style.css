@@ -1,6 +1,6 @@
 body, html {
   width: 100%;
-  margin: 0;
+  margin: 0 auto;
 }
 @font-face {
   font-family: KeeponTruckin;
@@ -26,8 +26,11 @@ body {
 }
 
 #container {
+  display:inline-block;
+  position: relative;
   width: 505px;
   margin: 0 auto;
+  max-width: 80%
 }
 
 h1{
@@ -49,7 +52,10 @@ h1{
 }
 
 canvas{
-  margin: -35px 0 0 0;
+  margin: -35px auto -20px;
+  width: 90%;
+  position:relative;
+  z-index: -1;
   -webkit-filter: drop-shadow(0 0 15px #000);
   filter: drop-shadow(0 0 0 15px #000);
 }
@@ -74,6 +80,14 @@ h1,
   filter: drop-shadow(0 0 8px #fff);
 }
 
+#header-buttons {
+  position: absolute;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  top: 0;
+}
+
 #restart-link,
 #info-link {
   text-decoration: none;
@@ -87,9 +101,13 @@ h1,
   padding: 0 20px 0 0;
 }
 
+#restart-link {
+  left: 0;
+}
+
 #info-link {
   text-align: right;
-  margin: 0 0 0 386px;
+  right: 0;
 }
 
 #restart-link::after {
@@ -161,8 +179,8 @@ h1,
   position: absolute;
   padding: 5px;
   margin: 0;
-  top: -70px;
-  right: 9px;
+  top: -50px;
+  right: 14%;
   border-radius: 5px;
   font-size: 1.25em;
   text-shadow: 1px 1px 1px #fff,

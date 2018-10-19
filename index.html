@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no">
+    <meta name="viewport" content="width=505, initial-scale=0.9, maximum-scale=0.9, shrink-to-fit=no, user-scalable=no">
     <title>Turtlr</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -10,12 +10,14 @@
 <body>
     <div id="container">
       <h1 id="title" class="animated rubberBand">Turtlr</h1>
-      <a href="#" id="restart-link" onclick="restartGame()">
-        <span class="tooltiptext">Restart the game!</span>
-      </a>
-      <a href="#" id="info-link" onclick="moreInfo()">
-        <span class="tooltiptext">Learn More!</span>
-      </a>
+      <div id="header-buttons">
+        <a href="#" id="restart-link" onclick="restartGame()">
+          <span class="tooltiptext">Restart the game!</span>
+        </a>
+        <a href="#" id="info-link" onclick="moreInfo()">
+          <span class="tooltiptext">Learn More!</span>
+        </a>
+      </div>
     </div>
     <div id="controls-container">
       <button id="controls-link" class="hide-controls" onclick="toggleControls()">
