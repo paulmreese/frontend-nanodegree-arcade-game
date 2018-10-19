@@ -161,7 +161,7 @@ h1,
   position: absolute;
   padding: 5px;
   margin: 0;
-  top: -65px;
+  top: -70px;
   right: 9px;
   border-radius: 5px;
   font-size: 1.25em;
@@ -189,6 +189,7 @@ h1,
                1px -1px 1px #fff,
                -1px 1px 1px #fff,
                -1px -1px 1px #fff;
+  background-color: rgba(180, 180, 180, 0.7);
 }
 
 .hide-controls::after {
